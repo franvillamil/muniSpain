@@ -1,0 +1,13 @@
+Package: muniSpain
+Title: Working with historical local-level data in Spain
+Version: 0.1.0
+Authors: Francisco Villamil <francisco.villamil@icr.gess.ethz.ch>
+Maintainer: Francisco Villamil <francisco.villamil@icr.gess.ethz.ch>
+Description: Provides a solution when working with historical local-level
+   data in Spain by merging municipalities that were once together given
+   the chosen dates, and transforming municipality names into INE codes.
+License: GPL-2
+Encoding: UTF-8
+LazyData: true
+URL: https://github.com/franvillamil/muniSpain/
+RoxygenNote: 6.1.1
