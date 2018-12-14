@@ -5,7 +5,7 @@ This is a R package to deal with territorial changes in Spanish municipalities w
 It relies on the municipality codes from the [*Instituto Nacional de Estadística* (INE)](http://ine.es/) and the list of municipality changes compiled and corrected by Francisco J. Goerlich and Francisco Ruiz (see [Goerlich and Ruiz 2018](https://doi.org/10.1515/jos-2018-0005), and below for more information).
 The package also allows converting municipality names (including old and multi-language denominations) to INE codes.
 
-*Note:* A separate repository shows the R code used to scrap the INE census for all municipalities using [`rvest`](https://github.com/hadley/rvest).
+*Note:* A separate repository [(link)](https://github.com/franvillamil/scrap_INE_census) shows the R code used to scrap the INE census for all municipalities using [`rvest`](https://github.com/hadley/rvest).
 
 `muniSpain` is currently in progress. In particular, partial changes in municipalities (such as when two municipalities exchange a small part of their territory or a municipality splits and these parts are integrated in different municipalities) are still not implemented.
 Moreover, it will include further resources to deal with different historical territorial units and analyze different datasets.
@@ -40,15 +40,99 @@ This function takes a character vector of municipality codes (`old_codes`) and r
 
 The function `changes_newcode` is actually a wrapper for the function `changes_groups(y_start, y_end, ...)` which takes the period and, optionally, a set of provinces, and returns the correspondence matrix: a character vector grouping together all municipalities that were once merged, separated in each string by ';'.
 
+**Examples**
+
+``` r
+## Tapia de Casariego (33070, Asturias) segregated from
+## Castropol (33017) in 1863, between 1860 and 1877 censuses
+
+changes_newcode(c("33017", "33070"), 1900, 2001)
+#> [1] "33017" "33070"
+
+changes_newcode(c("33017", "33070"), 1877, 2001)
+#>[1] "33017" "33017"
+
+changes_newcode(c("33017", "33070"), 1877, 2001,
+  muni_output = "largest")
+#> [1] "33070" "33070"
+
+changes_newcode(c("33017", "33070"), 1877, 2001,
+  muni_output = "largest", checks = TRUE)
+#> [1] "Checked: All municipalities included"
+#> [1] "Checked: No duplicated municipalities"
+#> [1] "33070" "33070"
+```
+
+``` r
+## Correspondence matrix for Bizkaia, 1930-1970
+
+bizkaia_changes = changes_groups(1930, 1970,
+  prov = "bizkaia", checks = TRUE)
+#> [1] "Checked: All municipalities included"
+#> [1] "Checked: No duplicated municipalities"
+
+head(bizkaia_changes)
+#> [1] "48001" "48002" "48004" "48005" "48006" "48007"
+
+tail(bizkaia_changes)
+#> [1] "48091;48504;48506;48508"
+#> [2] "48511;48060;48524;48527"
+#> [3] "48523;48520;48067"
+#> [4] "48530;48529;48518;48512;48507;48501;48046"
+#> [5] "48532;48525;48535;48513;48534;48516;48514;48510;48020"
+#> [6] "48536;48009"
+```
+
+``` r
+## Using the `recycle' option in changes_newcode()
+
+ls()
+#> character(0)
+
+# Saves correspondence matrix for the whole province
+changes_newcode(c("48020", "48513", "48534", "48535"),
+  1920, 1970, recycle = TRUE)
+#> [1] "48020" "48020" "48020" "48020"
+
+ls()
+#> [1] "muni_groups"
+
+# Equivalent to the one generated with changes_groups()
+changes_bizkaia_20_70 = changes_groups(1920, 1970,
+  prov = "bizkaia")
+identical(muni_groups, changes_bizkaia_20_70)
+#> [1] TRUE
+
+```
 
 _Note:_
-Is better to introduce municipality codes as a character vector, and those where the province code is between 1 and 9 should be in the form '01001', '01002', etc. This is because municipality codes are formed with the code of the province (01-52) and the municipality coded (usually 1-999). However, in a far-from-optimal decision, INE decided to assign the codes 5000-5999 to those municipalities that disappeared between 1842 and 1857. This means that two municipalities might share a code number when using integer numbers, such as is the case of "035001" (Pueblo Nuevo de San Rafael, in Alicante) and "35001" (Agaete, in Las Palmas).
+Is better to introduce municipality codes as a character vector, and those where the province code is between 1 and 9 should be in the form '01001', '01002', etc. This is because municipality codes are formed with the code of the province (01-52) and the municipality coded (usually 1-999). However, in a far-from-optimal decision, INE decided to assign the codes 5000-5999 to those municipalities that disappeared between 1842 and 1857. This means that two municipalities might share a code number when using integer numbers, such as is the case of "035001" (Pueblo Nuevo de San Rafael, in Alicante) and "35001" (Agaete, in Las Palmas). If using these census (1860 or earlier), the function will give a warning message reminding of this.
 
 ### Municipality codes
 
-In addition, the `name_to_code()` function
+In addition, the `name_to_code()` function translates municipality names into INE codes. At the moment, the database includes all official names from INE, which includes those in different languages (e.g. Puente Nuevo, A Pontenova) and previous denominations (e.g. Casas Viejas, Casavieja). This is work in progress and will soon include more denominations for each municipality, particularly with regards to spelling differences and multi-word names (e.g. 'El Franco', 'Franco, El', 'Franco (El)') which sometimes appear differently.
 
-args: `muni` and `prov` (default = NULL)
+`name_to_code()` takes two arguments, a string or character vector `muni` with the municipality names and, optionally, a vector of the same length `prov` (default = NULL) specifying the province. If no province is entered but two municipalities with the same name are found, the function will return an error and ask for the province.
+
+``` r
+name_to_code("Oviedo")
+#> [1] "33044"
+name_to_code("Mieres")
+#> Error in name_to_code("Mieres") :
+#>   Duplicates found - please specify provinces
+name_to_code("Mieres", prov = "Asturias")
+#> [1] "33037"
+name_to_code("Mieres", prov = "Girona")
+#> [1] "17105"
+
+name_to_code(c("Oviedo", "Mieres"))
+#> Error in name_to_code(c("Oviedo", "Mieres")) :
+#>   Duplicates found - please specify provinces
+name_to_code(c("Oviedo", "Mieres"), rep("Asturias", 2))
+#> [1] "33044" "33037"
+name_to_code(c("Mieres", "Mieres"), c("Asturias", "Girona"))
+#> [1] "33037" "17105"
+```
 
 ## Information and sources
 
