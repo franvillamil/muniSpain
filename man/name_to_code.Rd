@@ -2,7 +2,7 @@
 % Please edit documentation in R/name_to_code.R
 \name{name_to_code}
 \alias{name_to_code}
-\title{Returns INE codes correspoding to municipality names.}
+\title{Returns INE codes corresponding to municipality names.}
 \usage{
 name_to_code(muni, prov = NULL)
 }
@@ -26,13 +26,13 @@ INE codes equivalent to the input. If not found, it returns NA.}
 Character vector equivalent to the input. NA if not found.
 }
 \description{
-Returns INE codes correspoding to municipality names.
+Returns INE codes corresponding to municipality names.
 }
 \examples{
-  name_to_code("Tapia")
+  # name_to_code("Tapia") # Returns an error
+  # name_to_code(c("Tapia", "Castropol")) # Returns an error
   name_to_code("Tapia de Casariego")
   name_to_code(c("Tapia", "Castropol"), rep("Asturias", 2))
-  name_to_code(c("Tapia", "Castropol"))
 
 
 }

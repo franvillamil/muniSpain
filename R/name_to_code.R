@@ -17,10 +17,10 @@
 #' @return Character vector equivalent to the input. NA if not found.
 #'
 #' @examples
-#'   name_to_code("Tapia")
+#'   # name_to_code("Tapia") # Returns an error
+#'   # name_to_code(c("Tapia", "Castropol")) # Returns an error
 #'   name_to_code("Tapia de Casariego")
 #'   name_to_code(c("Tapia", "Castropol"), rep("Asturias", 2))
-#'   name_to_code(c("Tapia", "Castropol"))
 #'
 #'
 #' @export
