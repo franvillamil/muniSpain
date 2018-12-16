@@ -110,9 +110,7 @@ Is better to introduce municipality codes as a character vector, and those where
 
 ### Municipality codes
 
-In addition, the `name_to_code()` function translates municipality names into INE codes. At the moment, the database includes all official names from INE, which includes those in different languages (e.g. Puente Nuevo, A Pontenova) and previous denominations (e.g. Casas Viejas, Casavieja). This is work in progress and will soon include more denominations for each municipality, particularly with regards to spelling differences and multi-word names (e.g. 'El Franco', 'Franco, El', 'Franco (El)') which sometimes appear differently.
-
-`name_to_code()` takes two arguments, a string or character vector `muni` with the municipality names and, optionally, a vector of the same length `prov` (default = NULL) specifying the province. If no province is entered but two municipalities with the same name are found, the function will return an error and ask for the province.
+In addition, the `name_to_code()` function translates municipality names into INE codes. It takes two arguments, a string or character vector `muni` with the municipality names and, optionally, a vector of the same length `prov` (default = NULL) specifying the province. If no province is entered but two municipalities with the same name are found, the function will return an error and ask for the province.
 
 ``` r
 name_to_code("Oviedo")
@@ -136,8 +134,22 @@ name_to_code(c("Mieres", "Mieres"), c("Asturias", "Girona"))
 
 ## Information and sources
 
-_to do_
+The original information on territorial changes comes from INE. In the census website, INE lists all changes that each municipality experienced since 1842, including name changes (the [script that scraps the census data from INE](https://github.com/franvillamil/scrap_INE_census) also downloads this information). However, it contains errors and inconsistencies. Francisco J. Goerlich and Francisco Ruiz compiled this information and detected and corrected some mistakes, developing typology of boundary changes in territorial units, as part of a project to develop homogenous population series for Spain. More information can be found in:
+
+* [Goerlich, Francisco and Francisco Ruiz (2018)](https://content.sciendo.com/view/journals/jos/34/1/article-p83.xml) Typology and Representation of Alterations in Territorial Units: A Proposal. _Journal of Official Statistics_ 34(1): 83-106.
+
+For more information about the project to develop homogenous series of population data, breaking down municipalities and using data from sub-local units, see:
+
+* [Goerlich, Francisco and Matilde Mas (dirs.) (2006)](https://www.fbbva.es/wp-content/uploads/2017/05/dat/DE_2006_IVIE_localizacion_poblacion_espanola.pdf) La localización de la población española sobre el territorio: Un siglo de cambios. Bilbao: Fundación BBVA.
 
 ### Implementing municipality changes
 
+This version of `muniSpain` only takes into account full territorial changes. In other words, it implements changes that involved the creation and extinction of municipalities because of merges, splits, and integrations. The strategy to deal with these changes is to come up with a 'minimum list' of municipalities, This strategy allows any local-level data collected at any point in time during the period considered to be effectively merged with other datasets. Thus, for instance, if a municipality splits to form two new ones, they are considered as merged durign the whole period. This logic also extends to double- or even triple-level changes, when a spin-off municipality later splits itself.
+
+Some quality datasets such as census data or even section-level electoral data would in theory allow for a finer aggregation using sub-local units, without having to group together municipalities. However, this is not possible in most cases.
+
+Partial changes are a bit more complicated, and they will be included in a future version of the package, giving different options regarding how to include them.
+
 ### Names and codes
+
+At the moment, the database includes all official names from INE, which includes those in different languages (e.g. Puente Nuevo, A Pontenova) and previous denominations (e.g. Casas Viejas, Casavieja). This is work in progress and will soon include more denominations for each municipality, particularly with regards to spelling differences and multi-word names (e.g. 'El Franco', 'Franco, El', 'Franco (El)') which sometimes appear differently.
