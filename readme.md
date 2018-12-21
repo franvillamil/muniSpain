@@ -49,14 +49,14 @@ The function `changes_newcode` is actually a wrapper for the function `changes_g
 changes_newcode(c("33017", "33070"), 1900, 2001)
 #> [1] "33017" "33070"
 
-changes_newcode(c("33017", "33070"), 1877, 2001)
+changes_newcode(c("33017", "33070"), 1860, 2001)
 #>[1] "33017" "33017"
 
-changes_newcode(c("33017", "33070"), 1877, 2001,
+changes_newcode(c("33017", "33070"), 1860, 2001,
   muni_output = "largest")
 #> [1] "33070" "33070"
 
-changes_newcode(c("33017", "33070"), 1877, 2001,
+changes_newcode(c("33017", "33070"), 1860, 2001,
   muni_output = "largest", checks = TRUE)
 #> [1] "Checked: All municipalities included"
 #> [1] "Checked: No duplicated municipalities"

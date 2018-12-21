@@ -78,6 +78,7 @@ changes_groups = function(
   # Years included
   years_censo = unique(var_own$censo)
   years_censo = years_censo[years_censo >= y_start & years_censo<= y_end]
+  years_censo = years_censo[2:length(years_censo)]
 
   # Looping through census years
   for(i in years_censo){
