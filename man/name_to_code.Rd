@@ -8,7 +8,11 @@ name_to_code(muni, prov = NULL)
 }
 \arguments{
 \item{muni}{Character string or character vector. It returns a character vector of
-INE codes equivalent to the input. If not found, it returns NA.}
+INE codes equivalent to the input. If not found, it returns NA. In case two codes
+share a municipality name in the same province, it returns the largest code (usually,
+the latest municipality) and a warning. Usually, this is due to a municipality changing
+name and code, and then returning to the old denomination. A more problematic case is
+where two different municipalities in the same province share a name in the past.}
 
 \item{prov}{Optional, character vector. Include in case of name duplicates.
   If a duplicate is found and no province was specified, it returns an error message.
