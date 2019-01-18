@@ -112,6 +112,8 @@ Is better to introduce municipality codes as a character vector, and those where
 
 In addition, the `name_to_code()` function translates municipality names into INE codes. It takes two arguments, a string or character vector `muni` with the municipality names and, optionally, a vector of the same length `prov` (default = NULL) specifying the province. If no province is entered but two municipalities with the same name are found, the function will return an error and ask for the province.
 
+In a few cases, a same municipality name within the same province applies to two different codes. Usually, this is because a municipality changed name and code in the past and then went back to the old denomination (e.g. Biel in Zaragoza), or because two different municipalities shared a name in the past. In those cases, `name_to_code()` selects the largest code (usually the last one created) and prints a warning. Manual checking might be desiderable in these cases.
+
 ``` r
 name_to_code("Oviedo")
 #> [1] "33044"
