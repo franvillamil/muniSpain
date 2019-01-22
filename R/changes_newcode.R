@@ -4,8 +4,8 @@
 #' to their correspoding new code following territorial changes.
 #'
 #' @param old_codes Character vector, to be converted into new codes.
-#' @param y_start Integer, earliest year for which changes are considered
-#' @param y_end Integer, latest year for which changes are considered
+#' @param y_start Integer, earliest year for which changes are considered. Default = 1857.
+#' @param y_end Integer, latest year for which changes are considered. Default = 2011.
 #' @param muni_output "First" (default) or "largest". If "first", the municipality
 #'   with the first code will be chosen as the output for the whole group. If
 #'   "largest", the municipality with highest population at y_end will be chosen.
@@ -47,8 +47,8 @@
 #' @export
 changes_newcode = function(
   old_codes,
-  y_start,
-  y_end,
+  y_start = 1857,
+  y_end = 2011,
   muni_output = "first",
   partial_changes = FALSE,
   checks = FALSE,

@@ -35,7 +35,9 @@ name_to_code = function(muni, prov = NULL){
   }
 
   # Adapt muni to lower-case and add regex
-  muni_ptt = paste0("(^|;)", muni, "(;|$)")
+  muni_ptt = gsub("\\(", "\\\\\\(", muni)
+  muni_ptt = gsub("\\)", "\\\\\\)", muni_ptt)
+  muni_ptt = paste0("(^|;)", muni_ptt, "(;|$)")
 
   # Functions to find rows in codelist
   return_rows_noprov = function(muni_regex){
