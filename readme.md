@@ -5,7 +5,7 @@ This is a R package to deal with territorial changes in Spanish municipalities w
 It relies on the municipality codes from the [*Instituto Nacional de Estadística* (INE)](http://ine.es/) and the list of municipality changes compiled and corrected by Francisco J. Goerlich and Francisco Ruiz (see [Goerlich and Ruiz 2018](https://doi.org/10.1515/jos-2018-0005), and below for more information).
 The package also allows converting municipality names (including old and multi-language denominations) to INE codes.
 
-*Note:* A separate repository [(link)](https://github.com/franvillamil/scrap_INE_census) shows the R code used to scrap the INE census for all municipalities using [`rvest`](https://github.com/hadley/rvest).
+*Note:* A separate repository [(link)](https://github.com/franvillamil/scrap-INE-census) shows the R code used to scrap the INE census for all municipalities using [`rvest`](https://github.com/hadley/rvest).
 
 `muniSpain` is currently in progress. In particular, partial changes in municipalities (such as when two municipalities exchange a small part of their territory or a municipality splits and these parts are integrated in different municipalities) are still not implemented.
 Moreover, it will include further resources to deal with different historical territorial units and analyze different datasets.
@@ -31,7 +31,7 @@ The main function in this package is the following:
 
 `changes_newcode(old_codes, y_start, y_end, ...)`
 
-This function takes a character vector of municipality codes (`old_codes`) and returns a vector of the same length with the equivalent codes, depending on the period chosen. `y_start`  and `y_end` must correspond with valid census years, so if working with datasets that extend between 1936 and 1965, select 1930 and 1970. In addition, it has a number of additional arguments:
+This function takes a character vector of municipality codes (`old_codes`) and returns a vector of the same length with the equivalent codes, depending on the period chosen. `y_start`  and `y_end` must correspond with valid census years, so if working with datasets that extend between 1936 and 1965, select 1930 and 1970. By default, it covers the entire period (1857-2011). In addition, it has a number of additional arguments:
 
   * `muni_output` takes "first" (default) or "largest". When grouping together several municipalities, they will all take the code of the first one (as in the smallest number) or the one that had the largest population at `y_end`.
   * `partial_changes` (default = FALSE) this option is still not available.
@@ -136,7 +136,7 @@ name_to_code(c("Mieres", "Mieres"), c("Asturias", "Girona"))
 
 ## Information and sources
 
-The original information on territorial changes comes from INE. In the census website, INE lists all changes that each municipality experienced since 1842, including name changes (the [script that scraps the census data from INE](https://github.com/franvillamil/scrap_INE_census) also downloads this information). However, it contains errors and inconsistencies. Francisco J. Goerlich and Francisco Ruiz compiled this information and detected and corrected some mistakes, developing typology of boundary changes in territorial units, as part of a project to develop homogenous population series for Spain. More information can be found in:
+The original information on territorial changes comes from INE. In the census website, INE lists all changes that each municipality experienced since 1842, including name changes (the [script that scraps the census data from INE](https://github.com/franvillamil/scrap-INE-census) also downloads this information). However, it contains errors and inconsistencies. Francisco J. Goerlich and Francisco Ruiz compiled this information and detected and corrected some mistakes, developing typology of boundary changes in territorial units, as part of a project to develop homogenous population series for Spain. More information can be found in:
 
 * [Goerlich, Francisco and Francisco Ruiz (2018)](https://content.sciendo.com/view/journals/jos/34/1/article-p83.xml) Typology and Representation of Alterations in Territorial Units: A Proposal. _Journal of Official Statistics_ 34(1): 83-106.
 
