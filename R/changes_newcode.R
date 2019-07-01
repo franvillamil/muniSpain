@@ -59,8 +59,12 @@ changes_newcode = function(
     1930, 1940, 1950, 1960, 1970, 1981, 1991, 2001, 2011)
   if(!(y_start %in% y_valid & y_end %in% y_valid)){stop("Years must be valid census years")}
 
-  # Warning if 1857-1860 is included
-  if(y_start %in% c(1857, 1860)){warning("Because of INE codes used for municipalities that disappeared in 1857 (prov code + 5000-5999), make sure codes are included as a character vector and first two digits follow the format '01', '02', '03', ... '10', '11'. Eg, '01001' and not '1001'.")}
+  # # Warning if 1857-1860 is included
+  if(y_start %in% c(1857, 1860)){
+    warning("Because of INE codes used for municipalities that disappeared in 1857 (prov code + 5000-5999), make sure codes are included as a character vector and first two digits follow the format '01', '02', '03', ... '10', '11'. Eg, '01001' and not '1001'. (Not doing automatic correction with sprintf as some codes are 6-digit long.)")
+  } else {
+    old_codes = sprintf("%05d", old_codes)
+  }
 
   # * run changes_groups. if not there, save to workspace so dont have to call it again
   # Provinces in codes provided
