@@ -10,7 +10,7 @@ The package also allows converting municipality names (including old and multi-l
 `muniSpain` is currently in progress. In particular, partial changes in municipalities (such as when two municipalities exchange a small part of their territory or a municipality splits and these parts are integrated in different municipalities) are still not implemented.
 Moreover, it will include further resources to deal with different historical territorial units and analyze different datasets.
 
-**Pending** (as of March 2019):
+**Pending**:
 
 * Add alternative municipality names from [GADM](https://gadm.org/) for `name_to_code()`.
 * Returning municipality codes in character vector is useful when working with pre-1860 datasets, but it can cause unnecessary problems otherwise because of incompatibilities with interger variables (e.g. "02001", 02001). Solve this, accounting for the periods being used and add warning messages when needed.
