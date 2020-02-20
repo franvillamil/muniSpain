@@ -107,6 +107,28 @@ changes_groups = function(
   base = lapply(base, function(x) x = paste(unique(x[x != ""]), collapse = ";"))
   base = unlist(base)
 
+  ## Remove municipalities not relevant for the period
+  # Get relevant census period
+  census_cols = y_valid[y_valid >= y_start & y_valid <= y_end]
+  census_cols = paste0("c", census_cols)
+  if(!all(census_cols %in% names(census))){
+    stop("Some years not included in census? (Error: When removing municipalities not relevant)")}
+  census_incl = subset(census, prov_name %in% prov,
+    select = c("muni_code", census_cols))
+  # Remove municipalities without population during these years
+  census_incl = census_incl[rowSums(is.na(census_incl)) < length(census_cols),]
+  # Remove these municipalities from single-row output
+  singletons = base[!grepl(";", base)]
+  to_exclude = singletons[!singletons %in% census_incl$muni_code]
+  base = base[!base %in% to_exclude]
+  # NOTE (20/02/2020): Some municipalities are present but actually didn't exist at
+  # the end of the period (e.g. 22636). This is due because I'm currently excluding
+  # 'partial multisplits,' which in any case are mostly due to population loss.
+  # REMOVING THIS AS WELL: (not many, e.g. 8 in Huesca)
+  weirdos = singletons[singletons %in%
+    census_incl$muni_code[is.na(census_incl[,census_cols[length(census_cols)]])]]
+  base = base[!base %in% weirdos]
+
   # Checks
   if(checks == TRUE){
     base_raw = paste0(sprintf("%02.f", codelist_own$prov),

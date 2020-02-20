@@ -6,9 +6,9 @@
 #' @param old_codes Character vector, to be converted into new codes.
 #' @param y_start Integer, earliest year for which changes are considered. Default = 1857.
 #' @param y_end Integer, latest year for which changes are considered. Default = 2011.
-#' @param muni_output "First" (default) or "largest". If "first", the municipality
-#'   with the first code will be chosen as the output for the whole group. If
-#'   "largest", the municipality with highest population at y_end will be chosen.
+#' @param muni_output "largest" (default) or "first". If "largest", the municipality with
+#'   highest population at y_end will be chosen as the output for the whole group. If "first",
+#'   the municipality with the first code will be chosen.
 #' @param partial_changes (*In progress*) If TRUE, all municipalities that suffered
 #'   partial changes will also be merged (Logical, default = FALSE).
 #'
@@ -49,7 +49,7 @@ changes_newcode = function(
   old_codes,
   y_start = 1857,
   y_end = 2011,
-  muni_output = "first",
+  muni_output = "largest",
   partial_changes = FALSE,
   checks = FALSE,
   recycle = FALSE){
@@ -61,9 +61,9 @@ changes_newcode = function(
 
   # # Warning if 1857-1860 is included
   if(y_start %in% c(1857, 1860)){
-    warning("Because of INE codes used for municipalities that disappeared in 1857 (prov code + 5000-5999), make sure codes are included as a character vector and first two digits follow the format '01', '02', '03', ... '10', '11'. Eg, '01001' and not '1001'. (Not doing automatic correction with sprintf as some codes are 6-digit long.)")
+    warning("INE uses special coding for municipalities that disappeared in 1857 (prov code + 5000-5999). Make sure codes are included as a character vector and first two digits follow the format '01', '02', '03', ... '10', '11'. Eg, '01001' and not '1001'. (Not doing automatic correction with sprintf as some codes are 6-digit long.)")
   } else {
-    old_codes = sprintf("%05d", old_codes)
+    old_codes = sprintf("%05s", as.character(old_codes))
   }
 
   # * run changes_groups. if not there, save to workspace so dont have to call it again
@@ -95,13 +95,13 @@ changes_newcode = function(
   }
 
   # Order muni_groups
-  if(muni_output == "first"){
-    muni_groups = str_split(muni_groups, ";")
-    muni_groups = lapply(muni_groups, function(x) x[order(x)])
-    muni_groups = sapply(muni_groups, function(x) paste(x, collapse = ";"))
-  } else if (muni_output == "largest"){
+  if(muni_output == "largest"){
     muni_groups = str_split(muni_groups, ";")
     muni_groups = lapply(muni_groups, function(x) pop_order(x))
+    muni_groups = sapply(muni_groups, function(x) paste(x, collapse = ";"))
+  } else if (muni_output == "first"){
+    muni_groups = str_split(muni_groups, ";")
+    muni_groups = lapply(muni_groups, function(x) x[order(x)])
     muni_groups = sapply(muni_groups, function(x) paste(x, collapse = ";"))
   } else {
     warning("muni_output must be 'largest' or 'first'")

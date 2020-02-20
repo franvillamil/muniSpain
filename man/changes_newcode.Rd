@@ -4,9 +4,15 @@
 \alias{changes_newcode}
 \title{Changes a vector of municipality codes into new ones following territorial changes.}
 \usage{
-changes_newcode(old_codes, y_start = 1857, y_end = 2011,
-  muni_output = "first", partial_changes = FALSE, checks = FALSE,
-  recycle = FALSE)
+changes_newcode(
+  old_codes,
+  y_start = 1857,
+  y_end = 2011,
+  muni_output = "largest",
+  partial_changes = FALSE,
+  checks = FALSE,
+  recycle = FALSE
+)
 }
 \arguments{
 \item{old_codes}{Character vector, to be converted into new codes.}
@@ -15,9 +21,9 @@ changes_newcode(old_codes, y_start = 1857, y_end = 2011,
 
 \item{y_end}{Integer, latest year for which changes are considered. Default = 2011.}
 
-\item{muni_output}{"First" (default) or "largest". If "first", the municipality
-with the first code will be chosen as the output for the whole group. If
-"largest", the municipality with highest population at y_end will be chosen.}
+\item{muni_output}{"largest" (default) or "first". If "largest", the municipality with
+highest population at y_end will be chosen as the output for the whole group. If "first",
+the municipality with the first code will be chosen.}
 
 \item{partial_changes}{(*In progress*) If TRUE, all municipalities that suffered
   partial changes will also be merged (Logical, default = FALSE).

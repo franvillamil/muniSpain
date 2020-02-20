@@ -4,8 +4,13 @@
 \alias{changes_groups}
 \title{Group together municipalities that were once merged.}
 \usage{
-changes_groups(y_start, y_end, prov = NULL, partial_changes = FALSE,
-  checks = FALSE)
+changes_groups(
+  y_start,
+  y_end,
+  prov = NULL,
+  partial_changes = FALSE,
+  checks = FALSE
+)
 }
 \arguments{
 \item{y_start}{Integer, earliest year for which changes are considered}
