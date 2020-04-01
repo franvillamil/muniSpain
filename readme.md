@@ -18,6 +18,7 @@ Moreover, it will include further resources to deal with different historical te
 * In `name_to_code()`, make it possible to give only one province (chr vector of length 1) for a full vector of municipality names.
 * Perhaps give the option of selecting a specific time period for `name_to_code()`? (Would solve issues of different INE codes for the same municipality before/after merge, e.g. Forua in Bizkaia)
 * Add function to get province / CCAA from municipality code
+* Expand to changes from 2011 to 2020? (are they available?)
 
 ## Installation
 
