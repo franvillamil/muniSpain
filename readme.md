@@ -19,6 +19,8 @@ Moreover, it will include further resources to deal with different historical te
 * Perhaps give the option of selecting a specific time period for `name_to_code()`? (Would solve issues of different INE codes for the same municipality before/after merge, e.g. Forua in Bizkaia)
 * Add function to get province / CCAA from municipality code
 * Expand to changes from 2011 to 2020? (are they available?)
+* In `name_to_code`, accept also other versions of province names (e.g. Bizkaia/Vizcaya)
+* In `name_to_code`, if province is misspelled, show which value is not matched
 
 ## Installation
 
