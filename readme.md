@@ -13,7 +13,10 @@ Moreover, it will include further resources to deal with different historical te
 **Pending**:
 
 * Add alternative municipality names from [GADM](https://gadm.org/) for `name_to_code()`.
-* Returning municipality codes in character vector is useful when working with pre-1860 datasets, but it can cause unnecessary problems otherwise because of incompatibilities with interger variables (e.g. "02001", 02001). Solve this, accounting for the periods being used and add warning messages when needed.
+* Returning municipality codes in character vector is useful when working with pre-1860 datasets, but it can cause unnecessary problems otherwise because of incompatibilities with interger variables (e.g. "02001", 02001). Solve this, accounting for the periods being used and add warning messages when needed. **Note:**
+ * Flag the existence of municipalities with extra number of codings, i.e.  `str_length(muni_code) == 6 | (str_length(prov_code) == 1 & str_length(muni_code) == 5)`.
+ * Always return integer if no pre-1860 data is being used
+ * How to differentiate municipalities with pre-1860 data? Perhaps do internal work with other coding and return code + flag variable + warning.    
 * Design some procedure to deal with partial changes? Not easy with municipality-level data. Default: remove.
 * In `name_to_code()`, make it possible to give only one province (chr vector of length 1) for a full vector of municipality names.
 * Perhaps give the option of selecting a specific time period for `name_to_code()`? (Would solve issues of different INE codes for the same municipality before/after merge, e.g. Forua in Bizkaia)
