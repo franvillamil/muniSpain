@@ -63,7 +63,7 @@ name_to_code = function(muni, prov = NULL, year = NULL){
   # Functions to find rows in code_list
   return_rows_noprov = function(muni_regex){
     rows = code_list[grepl(muni_regex, code_list$names, ignore.case = TRUE),]
-    rows$regex = muni_regex
+    if(nrow(rows) != 0){rows$regex = muni_regex}
     if(length(unique(rows$prov)) > 1){
       stop("Same names in different provinces. Please specify provinces.")}
     return(rows)
