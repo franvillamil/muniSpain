@@ -12,7 +12,7 @@ Moreover, it will include further resources to deal with different historical te
 
 **Pending**:
 
-* Add alternative municipality names from [GADM](https://gadm.org/) for `name_to_code()`.
+* Add alternative municipality names from [GADM](https://gadm.org/) for `name_to_code()` (e.g. NAME_4 and VARNAME_4 in GADM, El/La, etc).
 * Returning municipality codes in character vector is useful when working with pre-1860 datasets, but it can cause unnecessary problems otherwise because of incompatibilities with interger variables (e.g. "02001", 02001). Solve this, accounting for the periods being used and add warning messages when needed. **Note:**
    * Flag the existence of municipalities with extra number of codings, i.e.  `str_length(muni_code) == 6 | (str_length(prov_code) == 1 & str_length(muni_code) == 5)`.
    * Always return integer if no pre-1860 data is being used
