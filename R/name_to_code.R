@@ -87,9 +87,7 @@ name_to_code = function(muni, prov = NULL, year = NULL){
     prov[tolower(prov) == "guipuzcoa"] = "Gipuzkoa"
     prov[tolower(prov) == "vizcaya"] = "Bizkaia"
 
-    if(length(prov) != length(muni)){
-      stop("'prov' and 'muni' must have the same length")
-    } else if(!all(tolower(prov) %in% code_list$prov_name)){
+    if(!all(tolower(prov) %in% code_list$prov_name)){
       stop(paste0("Province names not valid, misspelled? Not matched:",
         (prov[!tolower(prov) %in% code_list$prov_name]) ))
     }
@@ -117,7 +115,8 @@ name_to_code = function(muni, prov = NULL, year = NULL){
 
       # If both codes were present in last census, return the one matching
       if(!any(is.na(s_census[, ncol(s_census)]))){
-        s_census = subset(s_census, grepl(unique(code_list_row$regex), muni_name))
+        s_census = subset(s_census,
+          grepl(unique(code_list_row$regex), muni_name, ignore.case = TRUE))
       # If some but not all were missing from last census, return the one existing
       } else if (any(!is.na(s_census[, ncol(s_census)]))){
         s_census = s_census[!is.na(s_census[, ncol(s_census)]),]
