@@ -18,7 +18,8 @@ Moreover, it will include further resources to deal with different historical te
    * How to differentiate municipalities with pre-1860 data? Perhaps do internal work with other coding and return code + flag variable + warning.
 * Add alternative municipality names from [GADM](https://gadm.org/) for `name_to_code()` (e.g. NAME_4 and VARNAME_4 in GADM, El/La, etc).
 * Add functions to get province / CCAA from municipality code
-* Expand to changes from 2011 to 2020? (are they available?)
+* Expand to changes from 2011 to 2020?
+   * Are they available? They could be retrieved from INE, but only when 2021 census is available. Otherwise, take list from Padrón Continuo and code changes manually.
 
 ## Installation
 
