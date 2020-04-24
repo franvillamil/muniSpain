@@ -10,16 +10,6 @@ The package also allows converting municipality names (including old and multi-l
 `muniSpain` is currently in progress. In particular, partial changes in municipalities (such as when two municipalities exchange a small part of their territory or a municipality splits and these parts are integrated in different municipalities) are still not implemented.
 Moreover, it will include further resources to deal with different historical territorial units and analyze different datasets.
 
-**Pending**:
-
-* Returning municipality codes in character vector is useful when working with pre-1860 datasets, but it can cause unnecessary problems otherwise because of incompatibilities with interger variables (e.g. "02001", 02001). Solve this, accounting for the periods being used and add warning messages when needed. **Note:**
-   * Flag the existence of municipalities with extra number of codings, i.e.  `str_length(muni_code) == 6 | (str_length(prov_code) == 1 & str_length(muni_code) == 5)`.
-   * Always return integer if no pre-1860 data is being used
-   * How to differentiate municipalities with pre-1860 data? Perhaps do internal work with other coding and return code + flag variable + warning.
-* Add alternative municipality names from [GADM](https://gadm.org/) for `name_to_code()` (e.g. NAME_4 and VARNAME_4 in GADM, El/La, etc).
-* Expand to changes from 2011 to 2020?
-   * Are they available? They could be retrieved from INE, but only when 2021 census is available. Otherwise, take list from Padrón Continuo and code changes manually.
-
 ## Installation
 
 To install `muniSpain` from Github run:
@@ -146,9 +136,7 @@ name_to_code(c("Mieres", "Mieres"), c("Asturias", "Girona"))
 
 ### Additional functions
 
-`prov_to_code()` transforms a valid province name into corresponding provinces codes, while `code_to_prov()` does the opposite.
-
-`prov_to_ccaa()` returns the corresponding CCAA (ADM1 region) to each province name.
+`prov_to_code()` transforms a valid province name into corresponding provinces codes, while `code_to_prov()` does the opposite. `prov_to_ccaa()` returns the corresponding CCAA (ADM1 region) to each province name.
 
 ## Information and sources
 
@@ -171,3 +159,13 @@ Partial changes are a bit more complicated, and they will be included in a futur
 ### Names and codes
 
 At the moment, the database includes all official names from INE, which includes those in different languages (e.g. Puente Nuevo, A Pontenova) and previous denominations (e.g. Casas Viejas, Casavieja). This is work in progress and will soon include more denominations for each municipality, particularly with regards to spelling differences and multi-word names (e.g. 'El Franco', 'Franco, El', 'Franco (El)') which sometimes appear differently.
+
+### Next issues
+
+* Returning municipality codes in character vector is useful when working with pre-1860 datasets, but it can cause unnecessary problems otherwise because of incompatibilities with interger variables (e.g. "02001", 02001). Solve this, accounting for the periods being used and add warning messages when needed. **Note:**
+   * Flag the existence of municipalities with extra number of codings, i.e.  `str_length(muni_code) == 6 | (str_length(prov_code) == 1 & str_length(muni_code) == 5)`.
+   * Always return integer if no pre-1860 data is being used
+   * How to differentiate municipalities with pre-1860 data? Perhaps do internal work with other coding and return code + flag variable + warning.
+* Add alternative municipality names from [GADM](https://gadm.org/) for `name_to_code()` (e.g. NAME_4 and VARNAME_4 in GADM, El/La, etc).
+* Expand to changes from 2011 to 2020?
+   * Are they available? They could be retrieved from INE, but only when 2021 census is available. Otherwise, take list from Padrón Continuo and code changes manually.
