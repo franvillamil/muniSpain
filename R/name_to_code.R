@@ -82,6 +82,7 @@ name_to_code = function(muni, prov = NULL, year = NULL){
     # Correct usual
     prov[tolower(prov) == "araba"] = "Alava"
     prov[tolower(prov) == "la coruna"] = "A Coruna"
+    prov_name[tolower(prov_name) == "orense"] = "Ourense"
     prov[tolower(prov) == "gerona"] = "Girona"
     prov[tolower(prov) == "lerida"] = "Lleida"
     prov[tolower(prov) == "guipuzcoa"] = "Gipuzkoa"

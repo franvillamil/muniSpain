@@ -4,27 +4,32 @@
 \alias{name_to_code}
 \title{Returns INE codes corresponding to municipality names.}
 \usage{
-name_to_code(muni, prov = NULL)
+name_to_code(muni, prov = NULL, year = NULL)
 }
 \arguments{
 \item{muni}{Character string or character vector. It returns a character vector of
 INE codes equivalent to the input. If not found, it returns NA. In case two codes
-share a municipality name in the same province, it returns the largest code (usually,
-the latest municipality) and a warning. Usually, this is due to a municipality changing
-name and code, and then returning to the old denomination. A more problematic case is
-where two different municipalities in the same province share a name in the past.}
+share a municipality name in the same province, it returns the municipality existing
+in latest census, or the one that had the name in latest census. Otherwise, it gives
+a warning. Usually, these problems are due to a municipality changing name and code,
+and then returning to the old denomination, but there might be more problematic cases.}
 
 \item{prov}{Optional, character vector. Include in case of name duplicates.
   If a duplicate is found and no province was specified, it returns an error message.
+  If only one value is given for a set of municipalities, it is expanded to all of them.
 
-  Accepts official names, case-insentitive: Alava, Albacete, Alicante,
+  Accepts official names, case-insensitive: Alava, Albacete, Alicante,
   Almeria, Avila, Badajoz, Baleares, Barcelona, Burgos, Caceres, Cadiz,
   Castellon, Ceuta, Ciudad Real, Cordoba, A Coruna, Cuenca, Girona,
   Granada, Guadalajara, Gipuzkoa, Huelva, Huesca, Jaen, Leon, Lleida,
   La Rioja, Lugo, Madrid, Malaga, Melilla, Murcia, Navarra, Ourense,
   Asturias, Palencia, Las Palmas, Pontevedra, Salamanca,
   Santa Cruz de Tenerife, Cantabria, Segovia, Sevilla, Soria, Tarragona,
-  Teruel, Toledo, Valencia, Valladolid, Bizkaia, Zamora, Zaragoza.}
+  Teruel, Toledo, Valencia, Valladolid, Bizkaia, Zamora, Zaragoza.
+  Also: Araba, La Coruna, Gerona, Lerida, Guipuzcoa, Vizcaya.}
+
+\item{year}{Integer, code_list will be restricted to municipalities existing in a
+particular census year. Must be a valid census year.}
 }
 \value{
 Character vector equivalent to the input. NA if not found.

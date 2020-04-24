@@ -17,7 +17,6 @@ Moreover, it will include further resources to deal with different historical te
    * Always return integer if no pre-1860 data is being used
    * How to differentiate municipalities with pre-1860 data? Perhaps do internal work with other coding and return code + flag variable + warning.
 * Add alternative municipality names from [GADM](https://gadm.org/) for `name_to_code()` (e.g. NAME_4 and VARNAME_4 in GADM, El/La, etc).
-* Add functions to get province / CCAA from municipality code
 * Expand to changes from 2011 to 2020?
    * Are they available? They could be retrieved from INE, but only when 2021 census is available. Otherwise, take list from Padrón Continuo and code changes manually.
 
@@ -144,6 +143,12 @@ name_to_code(c("Oviedo", "Mieres"), rep("Asturias", 2))
 name_to_code(c("Mieres", "Mieres"), c("Asturias", "Girona"))
 #> [1] "33037" "17105"
 ```
+
+### Additional functions
+
+`prov_to_code()` transforms a valid province name into corresponding provinces codes, while `code_to_prov()` does the opposite.
+
+`prov_to_ccaa()` returns the corresponding CCAA (ADM1 region) to each province name.
 
 ## Information and sources
 
