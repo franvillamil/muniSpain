@@ -3,6 +3,7 @@
 export(adapt)
 export(changes_groups)
 export(changes_newcode)
+export(code_to_name)
 export(code_to_prov)
 export(name_to_code)
 export(prov_to_ccaa)
