@@ -169,3 +169,4 @@ At the moment, the database includes all official names from INE, which includes
 * Add alternative municipality names from [GADM](https://gadm.org/) for `name_to_code()` (e.g. NAME_4 and VARNAME_4 in GADM, El/La, etc).
 * Expand to changes from 2011 to 2020?
    * Are they available? They could be retrieved from INE, but only when 2021 census is available. Otherwise, take list from Padrón Continuo and code changes manually.
+* `adapt` function: Also adapt column names by default
