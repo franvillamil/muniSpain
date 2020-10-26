@@ -82,15 +82,19 @@ name_to_code = function(muni, prov = NULL, year = NULL){
     # Correct usual
     prov[tolower(prov) == "araba"] = "Alava"
     prov[tolower(prov) == "la coruna"] = "A Coruna"
-    prov_name[tolower(prov_name) == "orense"] = "Ourense"
+    prov[tolower(prov) == "orense"] = "Ourense"
     prov[tolower(prov) == "gerona"] = "Girona"
     prov[tolower(prov) == "lerida"] = "Lleida"
     prov[tolower(prov) == "guipuzcoa"] = "Gipuzkoa"
     prov[tolower(prov) == "vizcaya"] = "Bizkaia"
 
     if(!all(tolower(prov) %in% code_list$prov_name)){
-      stop(paste0("Province names not valid, misspelled? Not matched:",
-        (prov[!tolower(prov) %in% code_list$prov_name]) ))
+      stop(
+        paste0(
+          "Province names not valid, misspelled? Not matched:",
+          paste(prov[!tolower(prov) %in% code_list$prov_name], collapse = "; ")
+        )
+      )
     }
     rows_found = apply(cbind(muni_ptt, prov), 1, function(x) return_rows(x[1], x[2]))
 
