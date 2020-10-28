@@ -91,8 +91,8 @@ name_to_code = function(muni, prov = NULL, year = NULL){
     if(!all(tolower(prov) %in% code_list$prov_name)){
       stop(
         paste0(
-          "Province names not valid, misspelled? Not matched:",
-          paste(prov[!tolower(prov) %in% code_list$prov_name], collapse = "; ")
+          "Province names not valid, misspelled? NOT MACHED: ",
+          paste(unique(prov[!tolower(prov) %in% code_list$prov_name]), collapse = "; ")
         )
       )
     }
