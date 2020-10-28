@@ -16,8 +16,11 @@ To install `muniSpain` from Github run:
 
 ```
 # install.packages("devtools")
-devtools::install_github("franvillamil/muniSpain")
+library(devtools)
+install_github("franvillamil/muniSpain")
 ```
+
+*Note:* Installation might fail in newer versions of R because of warning messages being converted to error, which stops installation. (These warning messages are likely to be related to the locale encodings, which are already accounted for in the package.) Changing this setting by typing `Sys.setenv(R_REMOTES_NO_ERRORS_FROM_WARNINGS = "true")` should solve the problem (see [this](https://github.com/r-lib/remotes#environment-variables)). 
 
 ## Usage and logic
 
