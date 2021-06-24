@@ -1,6 +1,12 @@
 muniSpain
 =========
 
+<!-- badges: start -->
+<!-- [![rOS](https://ropenspain.github.io/rostemplate/reference/figures/ropenspain-badge.svg)](https://ropenspain.es/) -->
+![CRAN status](https://www.r-pkg.org/badges/version/muniSpain)
+![GitHub issues](https://img.shields.io/github/issues-raw/franvillamil/muniSpain)
+<!-- badges: end -->
+
 This is an R package to deal with territorial changes in Spanish municipalities when working with historical local-level data from different periods.
 It relies on the municipality codes from the [*Instituto Nacional de Estadística* (INE)](http://ine.es/) and the list of municipality changes compiled and corrected by Francisco J. Goerlich and Francisco Ruiz (see [Goerlich and Ruiz 2018](https://doi.org/10.1515/jos-2018-0005), and below for more information).
 The package also allows converting municipality names (including old and multi-language denominations) to INE codes.
