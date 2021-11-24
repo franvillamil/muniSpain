@@ -43,12 +43,12 @@ prov_to_code = function(prov){
   "segovia", "sevilla", "soria", "tarragona", "teruel", "toledo",
   "valencia", "valladolid", "zamora", "zaragoza")
   if(!all(prov_name %in% prov_list)){
-    stop(paste0("Unknown province names: ",
+    warning(paste0("Unknown province names: ",
       paste(unique(prov_name[!prov_name %in% prov_list]), collapse = ", ")))
   }
 
   # Transform to code
-  prov_code = prov_name
+  prov_code = NA
   prov_code[prov_name == "a coruna"] = 15
   prov_code[prov_name == "alava"] = 1
   prov_code[prov_name == "albacete"] = 2
