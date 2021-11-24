@@ -4,7 +4,7 @@
 \alias{name_to_code}
 \title{Returns INE codes corresponding to municipality names.}
 \usage{
-name_to_code(muni, prov = NULL, year = NULL)
+name_to_code(muni, prov = NULL, year = NULL, year_excl = NULL, force = FALSE)
 }
 \arguments{
 \item{muni}{Character string or character vector. It returns a character vector of
@@ -30,6 +30,12 @@ and then returning to the old denomination, but there might be more problematic 
 
 \item{year}{Integer, code_list will be restricted to municipalities existing in a
 particular census year. Must be a valid census year.}
+
+\item{year_excl}{Integer, code_list will exclude a particular census year.
+Must be a valid census year.}
+
+\item{force}{Logical (default = FALSE), if TRUE, it will return codes even if some municipaly
+names were found duplicated in more than one provinces (these will be returned as NA).}
 }
 \value{
 Character vector equivalent to the input. NA if not found.
@@ -40,6 +46,7 @@ Returns INE codes corresponding to municipality names.
 \examples{
   # name_to_code("Tapia") # Returns an error
   # name_to_code(c("Tapia", "Castropol")) # Returns an error
+  name_to_code(c("Tapia", "Castropol"), force = TRUE)
   name_to_code("Tapia de Casariego")
   name_to_code(c("Tapia", "Castropol"), rep("Asturias", 2))
 
