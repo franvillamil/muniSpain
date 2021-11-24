@@ -24,6 +24,9 @@
 #' @param year Integer, code_list will be restricted to municipalities existing in a
 #'   particular census year. Must be a valid census year.
 #'
+#' @param year_excl Integer, code_list will exclude a particular census year.
+#'   Must be a valid census year.
+#'
 #' @param force Logical (default = FALSE), if TRUE, it will return codes even if some municipaly
 #'   names were found duplicated in more than one provinces (these will be returned as NA).
 #'
@@ -32,12 +35,13 @@
 #' @examples
 #'   # name_to_code("Tapia") # Returns an error
 #'   # name_to_code(c("Tapia", "Castropol")) # Returns an error
+#'   name_to_code(c("Tapia", "Castropol"), force = TRUE)
 #'   name_to_code("Tapia de Casariego")
 #'   name_to_code(c("Tapia", "Castropol"), rep("Asturias", 2))
 #'
 #'
 #' @export
-name_to_code = function(muni, prov = NULL, year = NULL, force = FALSE){
+name_to_code = function(muni, prov = NULL, year = NULL, year_excl = NULL, force = FALSE){
 
   if(class(muni) != "character"){
     stop("muni must be of class 'character'")
@@ -46,10 +50,23 @@ name_to_code = function(muni, prov = NULL, year = NULL, force = FALSE){
   # Restrict code_list to years, if provided
   y_valid = c(1857, 1860, 1877, 1887, 1897, 1900, 1910, 1920,
     1930, 1940, 1950, 1960, 1970, 1981, 1991, 2001, 2011)
+  # Only one of these options
+  if(!is.null(year_excl) & !is.null(year)){
+    stop("Can only give one argument: year OR year_excl")}
+  # Include only these years
   if(!is.null(year)){
-    if(!year %in% y_valid){stop("Year must be a valid census year")}
-    c_year = is.na(census[, paste0("c", year)])
-    c_year = census$muni_code[!c_year]
+    if(!all(year %in% y_valid)){stop("Year must be a valid census year")}
+    c_year_mat = !is.na(census[, paste0("c", year)])
+    c_year = rowSums(c_year_mat) > 0
+    c_year = census$muni_code[c_year]
+    code_list = subset(codelist, muni_code %in% c_year)
+  } else {code_list = codelist}
+  # Exclude these years
+  if(!is.null(year_excl)){
+    if(!all(year_excl %in% y_valid)){stop("Year must be a valid census year")}
+    c_year_mat = !is.na(census[, paste0("c", y_valid[!y_valid %in% year_excl])])
+    c_year = rowSums(c_year_mat) > 0
+    c_year = census$muni_code[c_year]
     code_list = subset(codelist, muni_code %in% c_year)
   } else {code_list = codelist}
 
