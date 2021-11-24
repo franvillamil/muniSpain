@@ -1,8 +1,8 @@
-setwd("~/Documents/Academic/PhD/Projects/Spain/data")
+setwd("~/Documents/DATA/Spain")
 options(stringsAsFactors = FALSE)
 library(stringr)
 library(plyr)
-load("function_adapt.RData")
+source("muniSpain/R/adapt.R")
 
 p = c("alava", "albacete", "alicante", "almeria", "avila",
   "badajoz", "baleares", "barcelona", "burgos", "caceres",
@@ -66,4 +66,4 @@ codelist$names[is.na(codelist$names)] = census$muni_name[
 ### --------------------------------------------------------
 ### Save data
 
-save(codelist, var, census, file = "municipios/muniSpain/R/sysdata.rda")
+save(codelist, var, census, file = "muniSpain/R/sysdata.rda")
