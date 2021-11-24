@@ -20,9 +20,10 @@ p = c("alava", "albacete", "alicante", "almeria", "avila",
 ### Data on territorial changes
 
 # Ruiz & Goerlich (2018)
-rg = adapt( read.csv("municipios/ruiz_goerlich/ruiz_goerlich_cambios.csv",
+rg = adapt(read.csv("municipios/ruiz_goerlich/ruiz_goerlich_cambios.csv",
   colClasses = c("character", "integer", "character", "character",
-    "character", "character", "character", "character")) )
+    "character", "character", "character", "character")))
+names(rg)[grepl("codine$", names(rg))] = "codine" # ?
 
 rg$prov = as.integer(str_sub(rg$codine, 1, 2))
 rg$prov = p[rg$prov]
@@ -55,6 +56,17 @@ od$descripcion = gsub(" \\(\\d.*\\)$", "", od$descripcion)
 od$descripcion = gsub(" <se denominaba> ", ";", od$descripcion)
 od = ddply(od, .(codine), summarize,
   names = paste(descripcion, collapse = ";"))
+od$names = sapply(str_split(od$names, ";"),
+  function(x) paste(unique(x), collapse = ";"))
+
+# Add more name variations
+census_names = census$muni_name[match(od$codine, census$muni_code)]
+# Take census names and put La, Los, etc in front
+ptt_det = "(.*), (Los|El|l'|el|la|Ses|els|La|Las|Es|Sa|L'|Les|Els|les|A|O|As|Os)"
+census_names2 = gsub(ptt_det, "\\2 \\1", census_names)
+# Join
+od$names = paste(od$names, census_names, census_names2, sep = ";")
+# Remove duplicates
 od$names = sapply(str_split(od$names, ";"),
   function(x) paste(unique(x), collapse = ";"))
 
