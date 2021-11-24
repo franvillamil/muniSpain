@@ -24,6 +24,9 @@
 #' @param year Integer, code_list will be restricted to municipalities existing in a
 #'   particular census year. Must be a valid census year.
 #'
+#' @param force Logical (default = FALSE), if TRUE, it will return codes even if some municipaly
+#'   names were found duplicated in more than one provinces (these will be returned as NA).
+#'
 #' @return Character vector equivalent to the input. NA if not found.
 #'
 #' @examples
@@ -34,7 +37,7 @@
 #'
 #'
 #' @export
-name_to_code = function(muni, prov = NULL, year = NULL){
+name_to_code = function(muni, prov = NULL, year = NULL, force = FALSE){
 
   if(class(muni) != "character"){
     stop("muni must be of class 'character'")
@@ -65,10 +68,14 @@ name_to_code = function(muni, prov = NULL, year = NULL){
     rows = code_list[grepl(muni_regex, code_list$names, ignore.case = TRUE),]
     if(nrow(rows) != 0){rows$regex = muni_regex}
     if(length(unique(rows$prov)) > 1){
-      warning("Same names in different provinces (returning NA): Please specify provinces.")
-      rows[1,] = NA
-      rows = rows[1,]
-      rows$regex = muni_regex
+      if(force == TRUE){
+        warning("Same names in different provinces (returning NA): Please specify provinces.")
+        rows[1,] = NA
+        rows = rows[1,]
+        rows$regex = muni_regex
+      } else if (force == FALSE){
+        stop("Same names in different provinces (returning NA): Please specify provinces.")
+      } else {stop("force argument undefined?")}
     }
     return(rows)
   }
