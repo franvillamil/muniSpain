@@ -171,11 +171,13 @@ At the moment, the database includes all official names from INE, which includes
 
 ### Next issues
 
+* `name_to_code()` fails if year is only one value, either solve or introduce warning
+* In default output to `changes_newcode` (`muni_output = "largest"`), choose only among municipalities that exist in the last census used
+* Transition to `stringi::stri_trans_general(x, "Latin-ASCII")` (and ditch `adapt`?)
 * Returning municipality codes in character vector is useful when working with pre-1860 datasets, but it can cause unnecessary problems otherwise because of incompatibilities with interger variables (e.g. "02001", 02001). Solve this, accounting for the periods being used and add warning messages when needed. **Note:**
    * Flag the existence of municipalities with extra number of codings, i.e.  `str_length(muni_code) == 6 | (str_length(prov_code) == 1 & str_length(muni_code) == 5)`.
    * Always return integer if no pre-1860 data is being used
    * How to differentiate municipalities with pre-1860 data? Perhaps do internal work with other coding and return code + flag variable + warning.
 * Add alternative municipality names from [GADM](https://gadm.org/) for `name_to_code()` (e.g. NAME_4 and VARNAME_4 in GADM, El/La, etc).
-* Expand to changes from 2011 to 2020?
+* Expand to changes from 2011 to 2021?
    * Are they available? They could be retrieved from INE, but only when 2021 census is available. Otherwise, take list from Padrón Continuo and code changes manually.
-* `adapt` function: Also adapt column names by default
