@@ -171,7 +171,8 @@ At the moment, the database includes all official names from INE, which includes
 
 ### Next issues
 
-* `name_to_code()` fails if year is only one value, either solve or introduce warning
+* `year` option in `name_to_code()` to limit name search to some census years is not working
+  * Expand also function to check for common transformations (", el/la" at the end, etc)
 * In default output to `changes_newcode` (`muni_output = "largest"`), choose only among municipalities that exist in the last census used
 * Transition to `stringi::stri_trans_general(x, "Latin-ASCII")` (and ditch `adapt`?)
 * Returning municipality codes in character vector is useful when working with pre-1860 datasets, but it can cause unnecessary problems otherwise because of incompatibilities with interger variables (e.g. "02001", 02001). Solve this, accounting for the periods being used and add warning messages when needed. **Note:**
